@@ -1,0 +1,22 @@
+body {
+    /*background-image: url("/static/morning_city.jpg");*/
+    /*background-position: center;*/
+    /*background-size: 100%;*/
+}
+#home_form {
+    /*margin-top: 400px;*/
+    margin-left: auto;
+    margin-right: auto;
+}
+#header-content {
+    width: 100%;
+    font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#main-content {
+        padding-top: 350px;
+}
+.parallax-window {
+    /*-webkit-filter: blur(5px);*/
+  /*filter: blur(5px);*/
+}
