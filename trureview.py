@@ -12,9 +12,9 @@ def index():
 
 @app.route('/review')
 def review():
-    reviews = {"this thing sucks": 10, "I am too tired for this shit": 100000}
+    reviews = [("this thing sucks", 10), ("I am too tired for this shit", 100000)]
 
-    return render_template('review.html', item_name="Potato Test Item", overall=":( Not Good", reviews=reviews)
+    return render_template('review.html', item_name="The unstoppable passage of time #entropyalwaysincreases", overall="Not Good :(", reviews=reviews)
 
 
 

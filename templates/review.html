@@ -34,9 +34,55 @@
         </div>
     </div>
     {% for review in reviews %}
-        <div class="row">{{ review }}</div>
+        <div class="row">
+            <div class = "col-md-6">
+                <i><b>{{ review[0] }}</b></i> - similar things were said by {{ review[1] }} people
+            </div>
+        </div>
     {% endfor %}
 
+
+<div class="container">
+	<div class="row">
+            {% for review in reviews %}
+
+		<div class="row">
+                    <div class="col-xs-12 col-sm-3 col-md-3">
+                        <a href="#">
+                            <img src="http://wanderluxe.theluxenomad.com/wp-content/uploads/2014/10/http-www.urchinbali.comgallery.jpg" class="img-responsive img-box img-thumbnail">
+                        </a>
+                    </div>
+                    <div class="col-xs-12 col-sm-9 col-md-9">
+                        <div class="list-group">
+                            <div class="list-group-item">
+                                <div class="row-picture">
+                                    <a href="#" title="sintret">
+                                        <img class="circle img-thumbnail img-box" src="http://sintret.com/img/andy.jpg" alt="sintret">
+                                    </a>
+                                </div>
+                                <div class="row-content">
+                                    <div class="list-group-item-heading">
+                                        <a href="#" title="sintret">
+                                            <small>sintret</small>
+                                        </a>
+                                    </div>
+                                    <small>
+                                        <i class="glyphicon glyphicon-time"></i> 3 days ago via <span class="twitter"> <i class="fa fa-twitter"></i> <a target="_blank" href="https://twitter.com/sintret" alt="sintret" title="sintret">@sintret</a></span>
+                                        <br>
+                                        <span class="explore"><i class="glyphicon glyphicon-th"></i> <a href="#">Explore 2 places </a></span>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <h4><i><b>{{ review[0] }}</b></i> - similar things were said by {{ review[1] }} people</h4>
+                        <p>Naturally, we know where Bali's newest restaurants are and what to order, so give that private chef a rest and check out these spanking new haunts.</p>
+                    </div>
+                </div>
+                <hr>
+
+        {% endfor %}
+	</div>
+</div>
 
 </div>
 
