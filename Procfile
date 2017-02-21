@@ -1,1 +1,1 @@
-web gunicorn trureview:app
+web gunicorn --timeout 120 trureview:app
