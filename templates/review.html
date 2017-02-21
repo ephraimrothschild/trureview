@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h4><i><b>{{ cluster['simple_sentence_str'] }}</b></i> - similar things were said by {{ cluster['cluster_size'] }} people</h4>
+                        <h4><i><b>&ldquo;{{ cluster['simple_sentence_str'] }}&rdquo;</b></i> - this was talked about {{ cluster['cluster_size'] }} times</h4>
 {#                        <p>{{ cluster['full_sentence_str'] }}</p>#}
                     {% for i in range(0,cluster['num_to_display']) %}
                         <p>{{  cluster['cluster'][i].simplified_sentence.text }} ---- ({{ cluster['cluster'][i].full_sentence.text }})</p>

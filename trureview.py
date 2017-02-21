@@ -32,12 +32,15 @@ def review_it():
         logging.info('extracted %d phrases', len(simple_reviews))
 
         eps = float(request.args.get('eps', '0.1'))
-        minpts = int(request.args.get('minpts', '2'))
+        minpts = int(request.args.get('minpts', '3'))
         clusters = cluster_simple_reviews(simple_reviews, eps, minpts)
 
         review_clusters = []
         overall = int(sum([simple_rev.review.overall for simple_rev in simple_reviews])/len(simple_reviews))
-        for cluster in clusters.values():
+        # Get the cluster keys except the one that represents noise
+        keys = clusters.keys() - set([-1])
+        for key in keys:
+            cluster = clusters[key]
             # Get average numbers of stars for cluster
             num_stars = int(sum([simple_rev.review.overall for simple_rev in cluster])/len(cluster))
             current_clust = {'simple_sentence_str': cluster[0].simplified_sentence.text,
@@ -48,8 +51,6 @@ def review_it():
                              'num_to_display': min(len(cluster), 20)}
             review_clusters.append(current_clust)
 
-        # Remove noise cluster:
-        review_clusters = review_clusters[1:]
         # Sort by number of times this type of sentence was said
         review_clusters.sort(key=lambda x:x['num_to_display'], reverse=True)
     return render_template('review.html', item_name=title,
