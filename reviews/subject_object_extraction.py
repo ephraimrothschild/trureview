@@ -147,7 +147,9 @@ def findSVOs(tokens):
                     objNegated = isNegated(obj)
                     svos.append((sub.lower_, "!" + v.lower_ if verbNegated or objNegated else v.lower_, obj.lower_))
     return svos
-#C
+
+
+# Created by Ephraim Rothschild on 2/20/17
 def findSVOsTokens(tokens):
     svos = []
     verbs = [tok for tok in tokens if tok.pos_ == "VERB" and tok.dep_ != "aux"]

@@ -59,7 +59,7 @@ def reviews_to_simple_reviews(reviews):
 # from sklearn.cluster import KMeans
 
 def cluster_simple_reviews(simple_reviews, epsilon=0.5, min_samples=5):
-    # This must take in a SimpleSentence object
+    # This must take in a SimpleReview object as defined at the top of this file
     dbscanner = DBSCAN(metric='cosine', algorithm='brute', eps=epsilon, min_samples=min_samples)
     # dbscanner = KMeans(n_clusters=20, init='k-means++', max_iter=100, n_init=1)
     labels = dbscanner.fit_predict([sentence.simplified_sentence.vector for sentence in simple_reviews])
