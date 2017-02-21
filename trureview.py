@@ -39,6 +39,11 @@ def review_it():
         overall = int(sum([simple_rev.review.overall for simple_rev in simple_reviews])/len(simple_reviews))
         # Get the cluster keys except the one that represents noise
         keys = clusters.keys() - set([-1])
+        # Find the largest cluster that isn't noise (since it appears that the largest non-noise cluster is actually
+        # also noise)
+        largest_cluster = sorted([(key, len(clusters[key])) for key in keys], key=len, reverse=True)[0][0]
+        # Remove from list of clusters
+        keys = keys - set([largest_cluster])
         for key in keys:
             cluster = clusters[key]
             # Get average numbers of stars for cluster
@@ -55,7 +60,7 @@ def review_it():
         # Sort by number of times this type of sentence was said
         review_clusters.sort(key=lambda x:x['cluster_size'], reverse=True)
     return render_template('review.html', item_name=title,
-                           overall=overall, clusters=review_clusters[1:])
+                           overall=overall, clusters=review_clusters)
 
 if __name__ == '__main__':
     app.run()
