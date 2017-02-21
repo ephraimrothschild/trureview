@@ -1,1 +1,1 @@
-gunicorn trureview:app
+web gunicorn trureview:app
