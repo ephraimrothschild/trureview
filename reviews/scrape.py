@@ -5,6 +5,11 @@ import re
 
 from reviews.structure import Review
 
+def scrape_yelp_title_from_url(url):
+    product_page = requests.get(url)
+    product_soup = BeautifulSoup(product_page.content, 'html.parser')
+    title = product_soup.find(class_='biz-page-title').text.strip()
+    return title
 
 def scrape_yelp_reviews_from_url(url):
     """

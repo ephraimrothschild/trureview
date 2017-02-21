@@ -8,7 +8,7 @@ app.debug = True
 
 logging.info('loading models...')
 
-from reviews.scrape import scrape_yelp_reviews_from_url
+from reviews.scrape import scrape_yelp_reviews_from_url, scrape_yelp_title_from_url
 from reviews.structure import reviews_to_simple_reviews
 from reviews.structure import cluster_simple_reviews
 from collections import namedtuple
@@ -26,6 +26,7 @@ def review_it():
     if product_url is not None:
         logging.info('scraping reviews from %s', product_url)
         reviews = scrape_yelp_reviews_from_url(product_url)
+        title = scrape_yelp_title_from_url(product_url)
         logging.info('scraped %d reviews', len(reviews))
         simple_reviews = reviews_to_simple_reviews(reviews)
         logging.info('extracted %d phrases', len(simple_reviews))
@@ -47,7 +48,7 @@ def review_it():
                              'num_to_display': min(len(cluster), 20)}
             review_clusters.append(current_clust)
 
-    return render_template('review.html', item_name="The unstoppable passage of time #entropyalwaysincreases",
+    return render_template('review.html', item_name=title,
                            overall=overall, clusters=review_clusters)
 
 if __name__ == '__main__':
