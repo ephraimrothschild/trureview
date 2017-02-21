@@ -21,17 +21,17 @@
     <div id="main-content" style="max-height: 100%">
         <div id="header-content" style="margin-bottom: 30px;">
             <div class="row">
-                <h1 style="align-content: center; color: #ccc; text-align:center;font-weight:400;font-size:60px"><b>Potahhhhhhhtough Thing Analyzer</b></h1>
+                <h1 style="align-content: center; color: #ccc; text-align:center;font-weight:400;font-size:60px"><b>TruReview</b></h1>
             </div>
         </div>
-        <form id="home_form">
+        <form id="home_form" action="/review-it" method="get">
             <div class="row" style="margin-bottom: 10px;">
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" style="width: 100%">
+                    <input type="text" class="form-control" name='url' required style="width: 100%">
                 </div>
                 <div class="col-md-1">
-                    <button class="btn btn-primary">Analyze Dat Stuffs</button>
+                    <button class="btn btn-primary" type="submit">Give me a non-crappy review</button>
                 </div>
             </div>
             <div class="row">

@@ -5,6 +5,7 @@
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/review.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/pages.css') }}">
@@ -18,64 +19,36 @@
 </head>
 <body>
 <div id="main-content">
-    <div class="row">
-        <div class="col-md-5">
-            <h4><b>Item: </b>{{ item_name }}</h4>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5">
-            <h4><b>Overall: </b>{{ overall }}</h4>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5">
-            <h4><b>Reviews</b></h4>
-        </div>
-    </div>
-    {% for review in reviews %}
-        <div class="row">
-            <div class = "col-md-6">
-                <i><b>{{ review[0] }}</b></i> - similar things were said by {{ review[1] }} people
-            </div>
-        </div>
-    {% endfor %}
-
-
 <div class="container">
 	<div class="row">
-            {% for review in reviews %}
+    <h4><b>Item: </b>{{ item_name }}</h4>
+        {% for cluster in clusters %}
 
-		<div class="row">
+		<div class="row" style="padding-top: 30px;">
                     <div class="col-xs-12 col-sm-3 col-md-3">
-                        <a href="#">
-                            <img src="http://wanderluxe.theluxenomad.com/wp-content/uploads/2014/10/http-www.urchinbali.comgallery.jpg" class="img-responsive img-box img-thumbnail">
-                        </a>
+                        {% if cluster['num_stars']< 3  %}
+                            <img src=" {{ url_for('static', filename='sad.png') }}" class="img-responsive img-box img-thumbnail" style="height: 150px; width: auto">
+                        {% elif  cluster['num_stars'] < 4 %}
+                            <img src=" {{url_for('static', filename='neutral.png') }}" class="img-responsive img-box img-thumbnail" style="height: 150px; width: auto">
+                        {% else %}
+                            <img src=" {{url_for('static', filename='smile.png') }}" class="img-responsive img-box img-thumbnail" style="height: 150px; width: auto">
+                        {% endif %}
                     </div>
                     <div class="col-xs-12 col-sm-9 col-md-9">
                         <div class="list-group">
                             <div class="list-group-item">
-                                <div class="row-picture">
-                                    <a href="#" title="sintret">
-                                        <img class="circle img-thumbnail img-box" src="http://sintret.com/img/andy.jpg" alt="sintret">
-                                    </a>
-                                </div>
                                 <div class="row-content">
-                                    <div class="list-group-item-heading">
-                                        <a href="#" title="sintret">
-                                            <small>sintret</small>
-                                        </a>
-                                    </div>
-                                    <small>
-                                        <i class="glyphicon glyphicon-time"></i> 3 days ago via <span class="twitter"> <i class="fa fa-twitter"></i> <a target="_blank" href="https://twitter.com/sintret" alt="sintret" title="sintret">@sintret</a></span>
-                                        <br>
-                                        <span class="explore"><i class="glyphicon glyphicon-th"></i> <a href="#">Explore 2 places </a></span>
-                                    </small>
+                                     {% for j in range(0,cluster['num_stars']) %}
+                                         <i class="fa fa-star" aria-hidden="true" style="font-size: 24px;"></i>
+                                     {% endfor %}
                                 </div>
                             </div>
                         </div>
-                        <h4><i><b>{{ review[0] }}</b></i> - similar things were said by {{ review[1] }} people</h4>
-                        <p>Naturally, we know where Bali's newest restaurants are and what to order, so give that private chef a rest and check out these spanking new haunts.</p>
+                        <h4><i><b>{{ cluster['simple_sentence_str'] }}</b></i> - similar things were said by {{ cluster['cluster_size'] }} people</h4>
+{#                        <p>{{ cluster['full_sentence_str'] }}</p>#}
+                    {% for i in range(0,cluster['num_to_display']) %}
+                        <p>{{  cluster['cluster'][i].simplified_sentence.text }}</p>
+                        {% endfor %}
                     </div>
                 </div>
                 <hr>
