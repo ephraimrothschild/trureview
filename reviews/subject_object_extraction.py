@@ -1,3 +1,6 @@
+# This file was taken from https://github.com/NSchrading/intro-spacy-nlp and then modified to fit the needs of
+# this specific project
+
 from nltk.stem.wordnet import WordNetLemmatizer
 from spacy.en import English
 
