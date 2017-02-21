@@ -65,7 +65,7 @@ def cluster_simple_reviews(simple_reviews, epsilon=0.5, min_samples=5):
     labels = dbscanner.fit_predict([sentence.simplified_sentence.vector for sentence in simple_reviews])
     clusters = {}
     for i in range(len(simple_reviews)):
-        label = labels[i] or -1
+        label = labels[i]
         if label not in clusters:
             clusters[label] = []
         clusters[label].append(simple_reviews[i])

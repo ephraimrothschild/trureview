@@ -48,13 +48,14 @@ def review_it():
                              'num_stars': num_stars,
                              'cluster_size': len(cluster),
                              'cluster': cluster,
-                             'num_to_display': min(len(cluster), 20)}
+                             'num_to_display': min(len(cluster), 20),
+                             'cluster_index': key}
             review_clusters.append(current_clust)
 
         # Sort by number of times this type of sentence was said
-        review_clusters.sort(key=lambda x:x['num_to_display'], reverse=True)
+        review_clusters.sort(key=lambda x:x['cluster_size'], reverse=True)
     return render_template('review.html', item_name=title,
-                           overall=overall, clusters=review_clusters)
+                           overall=overall, clusters=review_clusters[1:])
 
 if __name__ == '__main__':
     app.run()
