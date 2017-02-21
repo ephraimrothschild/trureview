@@ -48,6 +48,10 @@ def review_it():
                              'num_to_display': min(len(cluster), 20)}
             review_clusters.append(current_clust)
 
+        # Remove noise cluster:
+        review_clusters = review_clusters[1:]
+        # Sort by number of times this type of sentence was said
+        review_clusters.sort(key=lambda x:x['num_to_display'], reverse=True)
     return render_template('review.html', item_name=title,
                            overall=overall, clusters=review_clusters)
 
