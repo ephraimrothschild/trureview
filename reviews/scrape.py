@@ -8,7 +8,8 @@ import logging
 from reviews.structure import Review
 
 def scrape_yelp_title_from_url(url):
-    product_page = requests.get(url)
+    s = requests.Session()
+    product_page = s.get(url)
     product_soup = BeautifulSoup(product_page.content, 'html.parser')
     title = product_soup.find(class_='biz-page-title').text.strip()
     return title
@@ -20,14 +21,15 @@ def scrape_yelp_reviews_from_url(url):
     """
 
     reviews = []
+    s = requests.Session()
 
-    product_page = requests.get(url)
+    product_page = s.get(url)
     logging.info(product_page.content)
     product_soup = BeautifulSoup(product_page.content, 'html.parser')
     num_pages = int(re.search('of ([0-9]+)', product_soup.find(class_="page-of-pages").text.strip()).group(1))
     for i in range(0,num_pages):
         link = url + "?start=" + str(i*20)
-        current_page = requests.get(link)
+        current_page = s.get(link)
         review_soup = BeautifulSoup(current_page.content, 'html.parser')
         review_wrappers = review_soup.find_all(class_='review-wrapper')
         shouldcontinue = True
