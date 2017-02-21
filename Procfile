@@ -1,0 +1,1 @@
+gunicorn trureview:app

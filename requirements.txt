@@ -4,3 +4,4 @@ Flask==0.12
 nltk==3.2.2
 scikit_learn==0.18.1
 spacy==1.6.0
+gunicorn==19.6.0
