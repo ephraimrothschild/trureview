@@ -1,0 +1,6 @@
+requests==2.13.0
+beautifulsoup4==4.5.3
+Flask==0.12
+nltk==3.2.2
+scikit_learn==0.18.1
+spacy==1.6.0
