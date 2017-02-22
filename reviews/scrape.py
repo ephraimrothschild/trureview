@@ -28,10 +28,13 @@ def scrape_yelp_reviews_from_url(url):
     num_pages = int(re.search('of ([0-9]+)', product_soup.find(class_="page-of-pages").text.strip()).group(1))
 
     # Set up asyncronous requests
-    urls = [url + "?start=" + str(i*20) for i in range(num_pages)]
+    # sorts = "?sort_by=date_desc"
+    sorts = ""
+    urls = [url + "?start=" + str(i*20) + sorts for i in range(num_pages)]
     # print(urls)
     rs = [grequests.get(u) for u in urls]
     responses = grequests.map(rs)
+    responses = [response for response in responses if response]
     for current_page in responses:
         review_soup = BeautifulSoup(current_page.content, 'html.parser')
         review_wrappers = review_soup.find_all(class_='review-wrapper')

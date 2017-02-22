@@ -80,7 +80,7 @@
 
                             </a>
                             <span class="site-name">{{ item_name }}</span>
-                            <span class="site-description"><b>{{ overall_float }} Stars</b></span>
+                            <span class="site-description"><b>{{ overall_float }} Stars Overall</b></span>
                         </div>
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -125,6 +125,7 @@
 <div class="container">
 	<div class="row" style="background-color: #fcfcfc; width: 100%; margin-left: auto; margin-right: auto; padding: 0 30px 0 30px;">
     <h4><b>Item: </b>{{ item_name }}</h4>
+    <h4>Analyzed {{ num_reviews }} reviews. Extracted {{ num_simple_sentences }} review topics grouped into {{ num_clusters }} clusters.</h4>
         {% for cluster in clusters %}
 
 		<div class="row" style="padding-top: 30px;">

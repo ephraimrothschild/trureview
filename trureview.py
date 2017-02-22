@@ -59,11 +59,18 @@ def review_it():
         largest_cluster = sorted([(key, len(clusters[key])) for key in keys], key=len, reverse=True)[0][0]
         # Remove from list of clusters
         # keys = keys - set([largest_cluster])
-        keys = [key for key in keys if len(clusters[key]) < 100]
+        keys = [key for key in keys if len(clusters[key]) < max(100, len(simple_reviews)/100)]
         for key in keys:
             cluster = clusters[key]
             # Get average numbers of stars for cluster
-            num_stars = int(sum([simple_rev.review.overall for simple_rev in cluster])/len(cluster))
+            counted_reviews = set()
+            avg_rating = 0.0
+            for simple_rev in cluster:
+                if simple_rev.review not in counted_reviews:
+                    avg_rating += simple_rev.review.overall
+                    counted_reviews.add(simple_rev.review)
+            num_stars = int(avg_rating/len(counted_reviews))
+            # num_stars = int(sum([simple_rev.review.overall for simple_rev in cluster])/len(cluster))
             current_clust = {'simple_sentence_str': cluster[0].simplified_sentence.text.capitalize(),
                              'full_sentence_str': cluster[0].full_sentence.text,
                              'num_stars': num_stars,
@@ -77,6 +84,9 @@ def review_it():
         # Sort by number of times this type of sentence was said
         review_clusters.sort(key=lambda x:x['cluster_size'], reverse=True)
     return render_template('review.html', item_name=title,
+                           num_reviews=len(reviews),
+                           num_clusters=len(keys),
+                           num_simple_sentences=len(simple_reviews),
                            overall=int(overall), overall_float=float("{0:.2f}".format(overall)), clusters=review_clusters, url=product_url,
                            quotes=quotes, item_abreviation=''.join([w[0] for w in title.split(' ')]))
 
