@@ -1,14 +1,15 @@
-import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 import re
 import logging
+import grequests
+
 
 
 from reviews.structure import Review
 
 def scrape_yelp_title_from_url(url):
-    product_page = requests.get(url)
+    product_page = grequests.map([grequests.get(url)])[0]
     product_soup = BeautifulSoup(product_page.content, 'html.parser')
     title = product_soup.find(class_='biz-page-title').text.strip()
     return title
@@ -20,15 +21,18 @@ def scrape_yelp_reviews_from_url(url):
     """
 
     reviews = []
-
-    product_page = requests.get(url)
+    product_page = grequests.map([grequests.get(url)])[0]
     # print(product_page.content)
-    print('Scraping data from ' + url)
+    # print('Scraping data from ' + url)
     product_soup = BeautifulSoup(product_page.content, 'html.parser')
     num_pages = int(re.search('of ([0-9]+)', product_soup.find(class_="page-of-pages").text.strip()).group(1))
-    for i in range(0,num_pages):
-        link = url + "?start=" + str(i*20)
-        current_page = requests.get(link)
+
+    # Set up asyncronous requests
+    urls = [url + "?start=" + str(i*20) for i in range(num_pages)]
+    # print(urls)
+    rs = [grequests.get(u) for u in urls]
+    responses = grequests.map(rs)
+    for current_page in responses:
         review_soup = BeautifulSoup(current_page.content, 'html.parser')
         review_wrappers = review_soup.find_all(class_='review-wrapper')
         shouldcontinue = True
