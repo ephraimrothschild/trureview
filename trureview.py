@@ -12,6 +12,7 @@ from reviews.scrape import scrape_yelp_reviews_from_url, scrape_yelp_title_from_
 from reviews.structure import reviews_to_simple_reviews
 from reviews.structure import cluster_simple_reviews
 from collections import namedtuple
+import random
 
 
 @app.route('/')
@@ -36,7 +37,7 @@ def review_it():
         clusters = cluster_simple_reviews(simple_reviews, eps, minpts)
 
         review_clusters = []
-        overall = int(sum([simple_rev.review.overall for simple_rev in simple_reviews])/len(simple_reviews))
+        overall = sum([simple_rev.review.overall for simple_rev in simple_reviews])/float(len(simple_reviews))
         # Get the cluster keys except the one that represents noise
         keys = clusters.keys() - set([-1])
         # Find the largest cluster that isn't noise (since it appears that the largest non-noise cluster is actually
@@ -48,7 +49,7 @@ def review_it():
             cluster = clusters[key]
             # Get average numbers of stars for cluster
             num_stars = int(sum([simple_rev.review.overall for simple_rev in cluster])/len(cluster))
-            current_clust = {'simple_sentence_str': cluster[0].simplified_sentence.text,
+            current_clust = {'simple_sentence_str': cluster[0].simplified_sentence.text.capitalize(),
                              'full_sentence_str': cluster[0].full_sentence.text,
                              'num_stars': num_stars,
                              'cluster_size': len(cluster),
@@ -56,11 +57,13 @@ def review_it():
                              'num_to_display': min(len(cluster), 20),
                              'cluster_index': key}
             review_clusters.append(current_clust)
+        quotes = [clust['simple_sentence_str'] for clust in random.sample(review_clusters, 5)]
 
         # Sort by number of times this type of sentence was said
         review_clusters.sort(key=lambda x:x['cluster_size'], reverse=True)
     return render_template('review.html', item_name=title,
-                           overall=overall, clusters=review_clusters)
+                           overall=int(overall), overall_float=float("{0:.2f}".format(overall)), clusters=review_clusters, url=product_url,
+                           quotes=quotes, item_abreviation=''.join([w[0] for w in title.split(' ')]))
 
 if __name__ == '__main__':
     app.run()
