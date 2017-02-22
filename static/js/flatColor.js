@@ -52,5 +52,6 @@
     $('.flat-color-gen').each(function(i, obj) {
         //console.log(generateFlatColorWithOrder(i));
         $(this).css("background-color",generateFlatColorWithOrder(i).toString());
+        // $(this).css("background-color",generateRandomFlatColor().toString());
     });
 })(window.jQuery);
