@@ -13,6 +13,8 @@ from reviews.structure import reviews_to_simple_reviews
 from reviews.structure import cluster_simple_reviews
 from collections import namedtuple
 import random
+import time
+
 
 
 @app.route('/')
@@ -25,16 +27,28 @@ ReviewClust = namedtuple('ReviewClust', ['simple_sentence_str', 'num_stars', 'cl
 def review_it():
     product_url = request.args.get('url')
     if product_url is not None:
-        logging.info('scraping reviews from %s', product_url)
+        print('Scraping reviews from', product_url)
+        start_time = time.time()
         reviews = scrape_yelp_reviews_from_url(product_url)
         title = scrape_yelp_title_from_url(product_url)
+        end_time = time.time()
+
+        print('Scraping finished. Scraped',len(reviews), 'reviews in', end_time-start_time, 'seconds')
         logging.info('scraped %d reviews', len(reviews))
+        print('Extracting Simple Senteces...')
+        start_time = time.time()
         simple_reviews = reviews_to_simple_reviews(reviews)
+        end_time = time.time()
+        print("Simple Sentence extraction finished. Extracted", len(simple_reviews), 'Simple Sentences in', end_time-start_time, 'seconds')
         logging.info('extracted %d phrases', len(simple_reviews))
 
         eps = float(request.args.get('eps', '0.1'))
         minpts = int(request.args.get('minpts', '3'))
+        print('Beginning Clustering...')
+        start_time = time.time()
         clusters = cluster_simple_reviews(simple_reviews, eps, minpts)
+        end_time = time.time()
+        print('Clustering finished. Found', len(clusters), 'clusters in', end_time-start_time, 'seconds')
 
         review_clusters = []
         overall = sum([simple_rev.review.overall for simple_rev in simple_reviews])/float(len(simple_reviews))
