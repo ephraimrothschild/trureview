@@ -58,7 +58,7 @@ def review_it():
                              'num_to_display': min(len(cluster), 20),
                              'cluster_index': key}
             review_clusters.append(current_clust)
-        quotes = [clust['simple_sentence_str'] for clust in random.sample(review_clusters, 5)]
+        quotes = [clust['simple_sentence_str'] for clust in random.sample(review_clusters, min(7, len(review_clusters)))]
 
         # Sort by number of times this type of sentence was said
         review_clusters.sort(key=lambda x:x['cluster_size'], reverse=True)
