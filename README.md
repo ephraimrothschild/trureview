@@ -26,5 +26,5 @@ To do this, run the following pip commands:
 		 
 * Then use gunicorn to run the server
 
-        gunicorn --timeout 120 trureview:app
+        gunicorn --worker-class gevent --timeout 120 trureview:app
     

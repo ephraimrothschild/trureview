@@ -1,1 +1,1 @@
-web gunicorn --timeout 120 trureview:app
+web gunicorn --worker-class gevent --timeout 120 trureview:app
