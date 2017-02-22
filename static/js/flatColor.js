@@ -24,9 +24,9 @@
 
     function generateFlatColorWithOrder(num) {
         //Possible color values to use. Uncomment whichever you prefer.
-        // var colors = [32, 12, 102];
+        var colors = [32, 12, 102];
         // var colors = [243, 721, 423];
-        var colors = [768, 528, 721];
+        // var colors = [768, 528, 721];
         //var colors = [391, 837, 716];
         //var colors = [224, 296, 709];
         //var colors = [268, 389, 404];
@@ -38,6 +38,7 @@
         //var colors = [417, 124, 707];
         // var colors = [444, 461, 677];
         // var colors = [333, 230, 513];
+        // var colors = [-1.02, -1.25, 0.1];
 
         return generateCustomFlatColorWithOrder(num, colors, 2);
     }
