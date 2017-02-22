@@ -1,1 +1,1 @@
-web python trureview.py
+web gunicorn --timeout 120 trureview:app
