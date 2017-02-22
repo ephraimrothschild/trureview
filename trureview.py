@@ -44,7 +44,8 @@ def review_it():
         # also noise)
         largest_cluster = sorted([(key, len(clusters[key])) for key in keys], key=len, reverse=True)[0][0]
         # Remove from list of clusters
-        keys = keys - set([largest_cluster])
+        # keys = keys - set([largest_cluster])
+        keys = [key for key in keys if len(clusters[key]) < 200]
         for key in keys:
             cluster = clusters[key]
             # Get average numbers of stars for cluster
