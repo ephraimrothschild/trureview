@@ -58,7 +58,7 @@ def reviews_to_simple_reviews(reviews):
 
 # from sklearn.cluster import KMeans
 
-def cluster_simple_reviews(simple_reviews, epsilon=0.5, min_samples=5):
+def cluster_simple_reviews(simple_reviews, epsilon=0.1, min_samples=3):
     # This must take in a SimpleReview object as defined at the top of this file
     dbscanner = DBSCAN(metric='cosine', algorithm='brute', eps=epsilon, min_samples=min_samples)
     # dbscanner = KMeans(n_clusters=20, init='k-means++', max_iter=100, n_init=1)

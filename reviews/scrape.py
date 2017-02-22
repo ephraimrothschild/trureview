@@ -22,7 +22,8 @@ def scrape_yelp_reviews_from_url(url):
     reviews = []
 
     product_page = requests.get(url)
-    print(product_page.content)
+    # print(product_page.content)
+    print('Scraping data from ' + url)
     product_soup = BeautifulSoup(product_page.content, 'html.parser')
     num_pages = int(re.search('of ([0-9]+)', product_soup.find(class_="page-of-pages").text.strip()).group(1))
     for i in range(0,num_pages):
